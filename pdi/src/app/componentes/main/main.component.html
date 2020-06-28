@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <app-crear-row-col (rowAndCol)="capturarDatos($event)"></app-crear-row-col>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <button (click)="crearMatriz()" class="btn btn-block btn-outline-success">Crear Matriz</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div *ngIf="data.length>0">
+
+      </div>
+    </div>
+  </div>
+
+</div>
