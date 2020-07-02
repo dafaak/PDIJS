@@ -23,16 +23,17 @@
       </button>
     </div>
   </div>
-
+  <br>
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-block btn-outline-info" (click)="actualizarTabla()"> Actualizar Datos</button>
+      <button class="btn btn-block btn-outline-info" [hidden]="hiden" (click)="actualizarTabla()"> Actualizar Datos
+      </button>
     </div>
   </div>
-
+  <br>
   <div class="row">
-    <div class="col-sm-12">
-      <table id="tabla" class=" table table-responsive-sm">
+    <div class="col-sm-12 ">
+      <table id="tabla" class=" table table-responsive-sm text-center">
       </table>
     </div>
   </div>

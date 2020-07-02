@@ -73,15 +73,36 @@ export class MainComponent implements OnInit {
   }
 
   makeTable(array) {
-    const table = document.getElementById('tabla');
+    const table = document.getElementById('tabla') as HTMLTableElement;
     table.innerHTML = '';
+    const tHeader = document.createElement('thead');
+    const trh = document.createElement('tr');
+    const num = document.createElement('th');
+    num.scope = 'col';
+    num.textContent = '#';
+    trh.appendChild(num);
+    for (let f = 0; f < array.length; f++) {
+      const header = document.createElement('th');
+      header.scope = 'col';
+      header.style.border = '1px';
+      header.style.borderStyle = 'ridge';
+      header.className = 'table-info';
+      header.textContent = '' + f;
+      trh.appendChild(header);
+    }
+    tHeader.appendChild(trh);
+    table.appendChild(tHeader);
     for (let i = 0; i < array.length; i++) {
       const row = document.createElement('tr');
+      const header = document.createElement('th');
+      header.scope = 'row';
+      header.className = 'table-info';
+      header.textContent = '' + i;
+      row.appendChild(header);
       for (let j = 0; j < array[i].length; j++) {
         const cell = document.createElement('td');
         cell.textContent = array[i][j];
         cell.contentEditable = 'true';
-        cell.style.textAlign = 'center';
         cell.style.border = '0';
         cell.style.padding = '0';
         cell.style.margin = '0';
