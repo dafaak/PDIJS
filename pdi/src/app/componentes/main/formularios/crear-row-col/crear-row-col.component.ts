@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {debounceTime} from "rxjs/operators";
+import {FormControl, FormGroup} from '@angular/forms';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-crear-row-col',
@@ -13,8 +13,8 @@ export class CrearRowColComponent implements OnInit {
 
   constructor() {
     this.formRowCol = new FormGroup({
-      row: new FormControl('',),
-      col: new FormControl('',),
+      row: new FormControl('', ),
+      col: new FormControl('', ),
     });
     this.escucharFormulario();
   }

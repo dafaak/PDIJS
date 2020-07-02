@@ -1,0 +1,12 @@
+<form [formGroup]="formMatriz">
+  <div formArrayName="campo">
+    <div *ngFor="let celda of campo.controls; let i=index">
+      {{i}}.)
+      <input formControlName="valor"
+             type="text"
+             id="{{celda.value.valor.nombre}}"
+      />
+    </div>
+  </div>
+</form>
+<button (click)="enviarFormulario()">push me</button>

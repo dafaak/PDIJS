@@ -5,16 +5,35 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-6">
-      <button (click)="crearMatriz()" class="btn btn-block btn-outline-success">Crear Matriz</button>
+    <div class="col-sm-4">
+      <button (click)="crearMatriz()" [disabled]="disabledBotonCrearMatriz" class="btn btn-block btn-outline-success">
+        Crear Matriz
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <button (click)="transformarCaracteres()" [hidden]="hiden" d [disabled]="!esNumerico"
+              class="btn btn-block btn-outline-success">
+        Mostrar Matriz Caracteres
+      </button>
+    </div>
+    <div class="col-sm-4">
+      <button (click)="mostrarMatrizNumerica()" [hidden]="hiden" [disabled]="esNumerico"
+              class="btn btn-block btn-outline-success">
+        Mostrar Matriz Numérica
+      </button>
     </div>
   </div>
+
   <div class="row">
     <div class="col-sm-12">
-      <div *ngIf="data.length>0">
-
-      </div>
+      <button class="btn btn-block btn-outline-info" (click)="actualizarTabla()"> Actualizar Datos</button>
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-sm-12">
+      <table id="tabla" class=" table table-responsive-sm">
+      </table>
+    </div>
+  </div>
 </div>
