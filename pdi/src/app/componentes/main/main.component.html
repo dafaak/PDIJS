@@ -1,7 +1,13 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
       <app-crear-row-col (rowAndCol)="capturarDatos($event)"></app-crear-row-col>
+    </div>
+    <div class="col-sm-3">
+      <button class=" btn btn-block btn-outline-dark" (click)="cargarMatrizPrueba1()"> Cargar amtriz 1</button>
+    </div>
+    <div class="col-sm-3">
+      <button class=" btn btn-block btn-outline-dark" (click)="cargarMatrizPrueba2()"> Cargar amtriz 2</button>
     </div>
   </div>
   <div class="row">
@@ -11,7 +17,7 @@
       </button>
     </div>
     <div class="col-sm-4">
-      <button (click)="transformarCaracteres()" [hidden]="hiden" d [disabled]="!esNumerico"
+      <button (click)="mostrarMatrizCaracteres()" [hidden]="hiden" d [disabled]="!esNumerico"
               class="btn btn-block btn-outline-success">
         Mostrar Matriz Caracteres
       </button>
@@ -51,10 +57,33 @@
 
       <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
-          <div class="col-sm-4">
-            <app-ventana (lengthAndWidth)="capturarDatosLargoAncho($event)"></app-ventana>
-            <button class="btn btn-dark" (click)="filtroVentanaRectangulares()">Aplicar</button>
+          <div class="row">
+            <div class="col-sm-12">
+              <app-ventana (lengthAndWidth)="capturarDatosLargoAncho($event)"></app-ventana>
+            </div>
           </div>
+          <div class="row align-items-center">
+            <div class="col-sm-4 text-center">
+              <button class="btn btn-dark" [disabled]="disabledBotonaplicarFiltro"
+                      (click)="filtroVentanaRectangulares()">
+                Filtro Rectangular
+              </button>
+            </div>
+            <div class="col-sm-4 text-center">
+              <button class="btn btn-dark" [disabled]="disabledBotonesFiltrosMasPor"
+                      (click)="filtroVentanaMas()">
+                Filtro Más
+              </button>
+            </div>
+            <div class="col-sm-4 text-center">
+              <button class="btn btn-dark" [disabled]="disabledBotonesFiltrosMasPor"
+                      (click)="filtroVentanaPor()">
+                Filtro Por
+              </button>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </div>

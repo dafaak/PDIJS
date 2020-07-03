@@ -1,36 +1,36 @@
 <div class="container">
-  <h4>Filtro Rectangular</h4>
   <div class="row">
 
     <form [formGroup]="formLW">
 
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group ">
-            <label for="length">Largo:</label>
-            <input
-              [formControlName]="'length'"
-              type="text"
-              class="form-control"
-              id="length"
-            >
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
 
-          <div class="form-group ">
-            <label for="width" class="jasmine-description">Ancho:</label>
-            <input
-              [formControlName]="'width'"
-              type="text"
-              class="form-control"
-              id="width"
-            >
-          </div>
+      <div class="form-group row">
+        <label for="length" class="col-sm-3">Largo:</label>
+        <div class="col-sm-9">
+          <input
+            [formControlName]="'length'"
+            type="text"
+            class="form-control"
+            id="length"
+          >
         </div>
       </div>
+
+
+      <div class="form-group row">
+        <label for="width" class="col-sm-3">Ancho:</label>
+        <div class="col-sm-9">
+          <input
+            [formControlName]="'width'"
+            type="text"
+            class="form-control"
+            id="width"
+          >
+        </div>
+
+      </div>
+
+
       <ng-content></ng-content>
     </form>
   </div>
