@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {newArray} from '@angular/compiler/src/util';
+import {floor, size, sort} from 'mathjs'
 
 @Component({
   selector: 'app-main',
@@ -8,18 +9,22 @@ import {newArray} from '@angular/compiler/src/util';
 })
 export class MainComponent implements OnInit {
 
-  constructor() {
-  }
-
   row;
   col;
+  largo;
+  ancho;
   data = [];
   matriz = {};
   disabledBotonCrearMatriz = true;
+  disabledBotonFiltros = true;
   esNumerico = false;
   caracteres = ['&', '@', '#', '*', '+', '/', '-', ';', ',', '.', ' '];
   matrizCaracteres = [];
   hiden = true;
+
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
@@ -32,6 +37,16 @@ export class MainComponent implements OnInit {
     } else {
       this.disabledBotonCrearMatriz = true;
       this.hiden = true;
+    }
+  }
+
+  capturarDatosLargoAncho(event) {
+    this.largo = event.length;
+    this.ancho = event.width;
+    if (!isNaN(event.length) && !isNaN(event.width) && event.length > 0 && event.width > 0) {
+      this.disabledBotonFiltros = false;
+    } else {
+      this.disabledBotonFiltros = true;
     }
   }
 
@@ -178,4 +193,35 @@ export class MainComponent implements OnInit {
     }
 
   }
+
+  filtroVentanaRectangulares() {
+    const matrizSalida = this.data.map(function (arr) {
+      return arr.slice();
+    });
+    const sizeMatriz = size(matrizSalida)
+    const ventana = [];
+    const bordeX = floor(this.ancho / 2)
+    const bordeY = floor(this.largo / 2)
+    console.log('bordes', bordeX, bordeY)
+    for (var x = bordeX; x <= sizeMatriz[0] - bordeX - 1; x++) {
+      for (var y = bordeY; y <= sizeMatriz[1] - bordeY - 1; y++) {
+        let i = 0;
+        for (var fx = 0; fx < this.ancho; fx++) {
+          for (var fy = 0; fy < this.largo; fy++) {
+            const indiceX = x + fx - bordeX
+            const indiceY = y + fy - bordeY
+            const valor = this.data[indiceX][indiceY]
+            ventana.push(valor);
+            i++;
+
+          }
+        }
+        sort(ventana)
+        matrizSalida[x][y] = ventana[floor(ventana.length / 2)]
+        ventana.splice(0, ventana.length)
+      }
+    }
+    this.makeTable(matrizSalida);
+  }
+
 }

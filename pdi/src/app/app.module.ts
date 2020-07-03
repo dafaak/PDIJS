@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {MainComponent} from './componentes/main/main.component';
 import {MainModule} from "./componentes/main/main.module";
 import {NgbAlertModule, NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {VentanaModule} from './componentes/main/formularios/ventana/ventana.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {NgbAlertModule, NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-b
     BrowserModule,
     AppRoutingModule,
     MainModule,
+    VentanaModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

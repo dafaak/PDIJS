@@ -37,4 +37,28 @@
       </table>
     </div>
   </div>
+
+  <div class="accordion" id="accordionExample" [hidden]="hiden">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            FILTROS
+          </button>
+        </h2>
+      </div>
+
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <div class="col-sm-4">
+            <app-ventana (lengthAndWidth)="capturarDatosLargoAncho($event)"></app-ventana>
+            <button class="btn btn-dark" (click)="filtroVentanaRectangulares()">Aplicar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
 </div>
