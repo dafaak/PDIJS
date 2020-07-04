@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {newArray} from '@angular/compiler/src/util';
-import {floor, size, sort} from 'mathjs'
+import {floor, size, sort} from 'mathjs';
 
 @Component({
   selector: 'app-main',
@@ -35,7 +35,7 @@ export class MainComponent implements OnInit {
     [0, 0, 80, 80, 80, 80, 80, 80, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 100, 0, 0, 0, 0, 0, 0, 100, 0]
-  ]
+  ];
 
 
   matrixPrueba2 = [
@@ -49,7 +49,7 @@ export class MainComponent implements OnInit {
     [0, 0, 80, 80, 80, 80, 80, 80, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [100, 0, 0, 0, 0, 0, 0, 0, 0, 100]
-  ]
+  ];
 
   constructor() {
   }
@@ -224,34 +224,34 @@ export class MainComponent implements OnInit {
   }
 
   filtroVentanaRectangulares() {
-    const matrizSalida = this.data.map(function (arr) {
+    const matrizSalida = this.data.map((arr) => {
       return arr.slice();
     });
     matrizSalida[0][0] = 1000;
     console.log(matrizSalida[0][0], this.data[0][0]);
 
-    console.log('ventana rectangular ejecutando....')
-    const sizeMatriz = size(matrizSalida)
+    console.log('ventana rectangular ejecutando....');
+    const sizeMatriz = size(matrizSalida);
     const ventana = [];
-    const bordeX = floor(this.x / 2)
-    const bordeY = floor(this.y / 2)
+    const bordeX = floor(this.x / 2);
+    const bordeY = floor(this.y / 2);
     for (let x = bordeX; x <= sizeMatriz[0] - bordeX - 1; x++) {
       for (let y = bordeY; y <= sizeMatriz[1] - bordeY - 1; y++) {
         let i = 0;
         for (let fx = 0; fx < this.x; fx++) {
           for (let fy = 0; fy < this.y; fy++) {
-            const indiceX = x + fx - bordeX
-            const indiceY = y + fy - bordeY
-            const valor = this.data[indiceX][indiceY]
+            const indiceX = x + fx - bordeX;
+            const indiceY = y + fy - bordeY;
+            const valor = this.data[indiceX][indiceY];
             ventana.push(valor);
             i++;
 
           }
         }
-        sort(ventana)
-        console.log(ventana[floor(ventana.length / 2)])
-        matrizSalida[x][y] = ventana[floor(ventana.length / 2)]
-        ventana.splice(0, ventana.length)
+        sort(ventana);
+        console.log(ventana[floor(ventana.length / 2)]);
+        matrizSalida[x][y] = ventana[floor(ventana.length / 2)];
+        ventana.splice(0, ventana.length);
       }
     }
 
@@ -264,16 +264,16 @@ export class MainComponent implements OnInit {
   }
 
   filtroVentanaMas() {
-    const matrizSalida = this.data.map(function (arr) {
+    const matrizSalida = this.data.map((arr) => {
       return arr.slice();
     });
-    const ventana = []
-    console.log('ventana mas ejecutando....')
+    const ventana = [];
+    console.log('ventana mas ejecutando....');
     for (let x = 0; x < this.data.length; x++) {
       for (let y = 0; y < this.data[0].length; y++) {
         for (let rango = 1; rango <= this.x; rango++) {
 
-          //Control de bordes
+          // Control de bordes
           const xArriba = (x - rango < 0) ? 0 : x - rango;
           const xDebajo = (x + rango > this.data.length - 1) ? this.data.length - 1 : x + rango;
           const yIzquierda = (y - rango < 0) ? 0 : y - rango;
@@ -283,13 +283,13 @@ export class MainComponent implements OnInit {
             this.data[xDebajo][y], // debajo
             this.data[x][yIzquierda], // izquierda
             this.data[x][yDerecha] // derecha
-          )
+          );
         }
-        ventana.push(this.data[x][y])
-        sort(ventana)
-        matrizSalida[x][y] = ventana[floor(ventana.length / 2)]
-        console.log(ventana,ventana[floor(ventana.length / 2)],matrizSalida[x][y], this.data[x][y])
-        ventana.splice(0, ventana.length)
+        ventana.push(this.data[x][y]);
+        sort(ventana);
+        matrizSalida[x][y] = ventana[floor(ventana.length / 2)];
+        console.log(ventana, ventana[floor(ventana.length / 2)], matrizSalida[x][y], this.data[x][y]);
+        ventana.splice(0, ventana.length);
       }
     }
     this.makeTable(matrizSalida);
@@ -302,14 +302,14 @@ export class MainComponent implements OnInit {
 
   filtroVentanaPor() {
 
-    const matrizSalida = this.data.map(function (arr) {
+    const matrizSalida = this.data.map((arr) => {
       return arr.slice();
     });
-    console.log('ventana por ejecutando....')
-    const ventana = []
-    console.log(this.x)
-    for (let x = 0; x < this.data.length ; x++) {
-      for (let y = 0; y < this.data[0].length ; y++) {
+    console.log('ventana por ejecutando....');
+    const ventana = [];
+    console.log(this.x);
+    for (let x = 0; x < this.data.length; x++) {
+      for (let y = 0; y < this.data[0].length; y++) {
         for (let rango = 1; rango <= this.x; rango++) {
 
           // Control de bordes
@@ -322,13 +322,13 @@ export class MainComponent implements OnInit {
             this.data[xArriba][yIzquierda], // arriba izquierda
             this.data[xDebajo][yDerecha], // debajo derecha
             this.data[xDebajo][yIzquierda] // debajo izquierda
-          )
+          );
         }
-        ventana.push(this.data[x][y])
-        sort(ventana)
-        console.log('', ventana[floor(ventana.length / 2)], this.data[x][y])
-        matrizSalida[x][y] = ventana[floor(ventana.length / 2)]
-        ventana.splice(0, ventana.length)
+        ventana.push(this.data[x][y]);
+        sort(ventana);
+        console.log('', ventana[floor(ventana.length / 2)], this.data[x][y]);
+        matrizSalida[x][y] = ventana[floor(ventana.length / 2)];
+        ventana.splice(0, ventana.length);
       }
     }
     this.makeTable(matrizSalida);
@@ -341,27 +341,27 @@ export class MainComponent implements OnInit {
   }
 
   cargarMatrizPrueba1() {
-    this.data = this.matrixPrueba1.map(function (arr) {
+    this.data = this.matrixPrueba1.map((arr) => {
       return arr.slice();
     });
     this.col = this.matrixPrueba1.length;
     this.row = this.matrixPrueba1[0].length;
-    this.hiden = false
-    this.makeTable(this.data)
+    this.hiden = false;
+    this.makeTable(this.data);
   }
 
   cargarMatrizPrueba2() {
-    this.data = this.matrixPrueba2.map(function (arr) {
+    this.data = this.matrixPrueba2.map((arr) => {
       return arr.slice();
     });
-    this.matrizCaracteres = this.matrixPrueba2.map(function (arr) {
+    this.matrizCaracteres = this.matrixPrueba2.map((arr) => {
       return arr.slice();
     });
 
     this.col = this.matrixPrueba1.length;
     this.row = this.matrixPrueba1[0].length;
-    this.hiden = false
-    this.makeTable(this.data)
+    this.hiden = false;
+    this.makeTable(this.data);
   }
 
 }
