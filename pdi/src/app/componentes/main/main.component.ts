@@ -204,19 +204,16 @@ export class MainComponent implements OnInit {
 
   actualizarTabla() {
     const table = (document.getElementById('tabla') as HTMLTableElement);
-    for (let r = 0; r < this.row; r++) {
-      for (let c = 0; c < this.col; c++) {
+    for (let r = 1; r <= this.row; r++) {
+      for (let c = 1; c <= this.col; c++) {
         const dato = table.rows[r].cells[c].innerText;
         const isnum = !isNaN(Number(dato));
 
-        // console.log(isnum);
         if (isnum && dato.trim() !== '') {
-
-          // console.log('es num dtao:', dato);
           const numero = dato;
-          this.data[r][c] = numero;
+          this.data[r - 1][c - 1] = numero;
           const caracterNuevo = this.caracterSegunNumero(numero);
-          this.matrizCaracteres[r][c] = caracterNuevo;
+          this.matrizCaracteres[r - 1][c - 1] = caracterNuevo;
         }
       }
     }
