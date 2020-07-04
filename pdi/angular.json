@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "pdi"
+  "defaultProject": "pdi",
+  "cli": {
+    "analytics": false
+  }
 }

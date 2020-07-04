@@ -269,23 +269,23 @@ export class MainComponent implements OnInit {
     });
     const ventana = []
     console.log('ventana mas ejecutando....')
-    for (let x = 0; x < this.data.length - 1; x++) {
-      for (let y = 0; y < this.data[0].length - 1; y++) {
+    for (let x = 0; x < this.data.length; x++) {
+      for (let y = 0; y < this.data[0].length; y++) {
         for (let rango = 1; rango <= this.x; rango++) {
-          ventana.push(this.data[x][y])
+
           //Control de bordes
-          const xArriba = (x - rango < 0) ? x : x - rango
-          const xDebajo = (x + rango > this.data.length - 1) ? x : x + rango
-          const yIzquierda = (y - rango < 0) ? y : y - rango
-          const yDerecha = (y + rango > this.data[0].length - 1) ? y : y + rango
+          const xArriba = (x - rango < 0) ? 0 : x - rango;
+          const xDebajo = (x + rango > this.data.length - 1) ? this.data.length - 1 : x + rango;
+          const yIzquierda = (y - rango < 0) ? 0 : y - rango;
+          const yDerecha = (y + rango > this.data[0].length - 1) ? this.data[0].length - 1 : y + rango;
           ventana.push(
             this.data[xArriba][y], // arriba
             this.data[xDebajo][y], // debajo
             this.data[x][yIzquierda], // izquierda
-            this.data[x][yDerecha], // derecha
-            this.data[x][y] // actual
+            this.data[x][yDerecha] // derecha
           )
         }
+        ventana.push(this.data[x][y])
         sort(ventana)
         matrizSalida[x][y] = ventana[floor(ventana.length / 2)]
         console.log(ventana,ventana[floor(ventana.length / 2)],matrizSalida[x][y], this.data[x][y])
@@ -307,23 +307,24 @@ export class MainComponent implements OnInit {
     });
     console.log('ventana por ejecutando....')
     const ventana = []
-    for (let x = 0; x < this.data.length - 1; x++) {
-      for (let y = 0; y < this.data[0].length - 1; y++) {
+    console.log(this.x)
+    for (let x = 0; x < this.data.length ; x++) {
+      for (let y = 0; y < this.data[0].length ; y++) {
         for (let rango = 1; rango <= this.x; rango++) {
-          ventana.push(this.data[x][y])
+
           // Control de bordes
-          const xArriba = (x - rango < 0) ? x : x - rango
-          const xDebajo = (x + rango > this.data.length - 1) ? x : x + rango
-          const yIzquierda = (y - rango < 0) ? y : y - rango
-          const yDerecha = (y + rango > this.data[0].length - 1) ? y : y + rango
+          const xArriba = (x - rango < 0) ? 0 : x - rango;
+          const xDebajo = (x + rango > this.data.length - 1) ? this.data.length - 1 : x + rango;
+          const yIzquierda = (y - rango < 0) ? 0 : y - rango;
+          const yDerecha = (y + rango > this.data[0].length - 1) ? this.data[0].length - 1 : y + rango;
           ventana.push(
             this.data[xArriba][yDerecha], // arriba derecha
             this.data[xArriba][yIzquierda], // arriba izquierda
             this.data[xDebajo][yDerecha], // debajo derecha
-            this.data[xDebajo][yIzquierda], // derecha izquierda
-            this.data[x][y] // actual
+            this.data[xDebajo][yIzquierda] // debajo izquierda
           )
         }
+        ventana.push(this.data[x][y])
         sort(ventana)
         console.log('', ventana[floor(ventana.length / 2)], this.data[x][y])
         matrizSalida[x][y] = ventana[floor(ventana.length / 2)]
