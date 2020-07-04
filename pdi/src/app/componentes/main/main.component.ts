@@ -48,7 +48,7 @@ export class MainComponent implements OnInit {
     [0, 0, 80, 80, 80, 80, 80, 20, 0, 0],
     [0, 0, 80, 80, 80, 80, 80, 80, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [100, 0, 0, 0, 0, 0, 0, 0, 0, 100]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
 
   constructor() {
@@ -209,10 +209,10 @@ export class MainComponent implements OnInit {
         const dato = table.rows[r].cells[c].innerText;
         const isnum = !isNaN(Number(dato));
 
-        console.log(isnum);
+        // console.log(isnum);
         if (isnum && dato.trim() !== '') {
 
-          console.log('es num dtao:', dato);
+          // console.log('es num dtao:', dato);
           const numero = dato;
           this.data[r][c] = numero;
           const caracterNuevo = this.caracterSegunNumero(numero);
@@ -255,8 +255,8 @@ export class MainComponent implements OnInit {
       }
     }
 
-    this.data = matrizSalida.map((arr, index) => {
-      this.data[index] = arr.slice();
+    this.data = matrizSalida.map((arr) => {
+      return arr.slice();
     });
     // this.makeTable(matrizSalida);
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
@@ -325,7 +325,7 @@ export class MainComponent implements OnInit {
         }
         ventana.push(this.data[x][y]);
         sort(ventana);
-        console.log('', ventana[floor(ventana.length / 2)], this.data[x][y]);
+        console.log(ventana, ventana[floor(ventana.length / 2)], this.data[x][y]);
         matrizSalida[x][y] = ventana[floor(ventana.length / 2)];
         ventana.splice(0, ventana.length);
       }
