@@ -19,7 +19,7 @@ export class MainComponent implements OnInit {
   disabledBotonaplicarFiltro = true;
   disabledBotonesFiltrosMasPor = true;
   esNumerico = true;
-  caracteres = ['&', '@', '#', '*', '+', '/', '-', ';', ',', '.', ' '];
+  caracteres = [' ', '.', ',', ';', '-', '/', '+', '*', '#', '@', '&'];
   matrizCaracteres = [];
   hiden = true;
 
@@ -34,7 +34,7 @@ export class MainComponent implements OnInit {
     [0, 0, 80, 0, 0, 0, 0, 20, 0, 0],
     [0, 0, 80, 80, 80, 80, 80, 80, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 100, 0, 0, 0, 0, 0, 0, 100, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
 
 
@@ -224,7 +224,6 @@ export class MainComponent implements OnInit {
     const matrizSalida = this.data.map((arr) => {
       return arr.slice();
     });
-    matrizSalida[0][0] = 1000;
 
     const sizeMatriz = size(matrizSalida);
     const ventana = [];
@@ -337,6 +336,7 @@ export class MainComponent implements OnInit {
     this.col = this.matrixPrueba1.length;
     this.row = this.matrixPrueba1[0].length;
     this.hiden = false;
+    this.esNumerico = true;
     this.makeTable(this.data);
   }
 
@@ -351,6 +351,7 @@ export class MainComponent implements OnInit {
     this.col = this.matrixPrueba1.length;
     this.row = this.matrixPrueba1[0].length;
     this.hiden = false;
+    this.esNumerico = true;
     this.makeTable(this.data);
   }
 

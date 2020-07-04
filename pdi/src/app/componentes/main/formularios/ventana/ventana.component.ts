@@ -31,7 +31,7 @@ export class VentanaComponent implements OnInit {
       .subscribe(
         valoresFormulario => {
 
-          const esFormularioValido = this.formLW.valid && this.validarLargoImpar();
+          const esFormularioValido = this.formLW.valid;
           if (!esFormularioValido) {
             this.lengthAndWidth.emit(false);
 
