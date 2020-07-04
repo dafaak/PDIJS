@@ -225,9 +225,7 @@ export class MainComponent implements OnInit {
       return arr.slice();
     });
     matrizSalida[0][0] = 1000;
-    console.log(matrizSalida[0][0], this.data[0][0]);
 
-    console.log('ventana rectangular ejecutando....');
     const sizeMatriz = size(matrizSalida);
     const ventana = [];
     const bordeX = floor(this.x / 2);
@@ -246,7 +244,6 @@ export class MainComponent implements OnInit {
           }
         }
         sort(ventana);
-        console.log(ventana[floor(ventana.length / 2)]);
         matrizSalida[x][y] = ventana[floor(ventana.length / 2)];
         ventana.splice(0, ventana.length);
       }
@@ -264,7 +261,6 @@ export class MainComponent implements OnInit {
       return arr.slice();
     });
     const ventana = [];
-    console.log('ventana mas ejecutando....');
     for (let x = 0; x < this.data.length; x++) {
       for (let y = 0; y < this.data[0].length; y++) {
         for (let rango = 1; rango <= this.x; rango++) {
@@ -284,7 +280,6 @@ export class MainComponent implements OnInit {
         ventana.push(this.data[x][y]);
         sort(ventana);
         matrizSalida[x][y] = ventana[floor(ventana.length / 2)];
-        console.log(ventana, ventana[floor(ventana.length / 2)], matrizSalida[x][y], this.data[x][y]);
         ventana.splice(0, ventana.length);
       }
     }
@@ -301,9 +296,7 @@ export class MainComponent implements OnInit {
     const matrizSalida = this.data.map((arr) => {
       return arr.slice();
     });
-    console.log('ventana por ejecutando....');
     const ventana = [];
-    console.log(this.x);
     for (let x = 0; x < this.data.length; x++) {
       for (let y = 0; y < this.data[0].length; y++) {
         for (let rango = 1; rango <= this.x; rango++) {
@@ -322,7 +315,6 @@ export class MainComponent implements OnInit {
         }
         ventana.push(this.data[x][y]);
         sort(ventana);
-        console.log(ventana, ventana[floor(ventana.length / 2)], this.data[x][y]);
         matrizSalida[x][y] = ventana[floor(ventana.length / 2)];
         ventana.splice(0, ventana.length);
       }
@@ -331,7 +323,6 @@ export class MainComponent implements OnInit {
     this.data = matrizSalida.map((arr) => {
       return arr.slice();
     });
-    console.log(this.data);
 
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
   }
