@@ -255,12 +255,11 @@ export class MainComponent implements OnInit {
       }
     }
 
-    /*this.data = matrizSalida.map( (arr,index)=> {
-      this.data[index]= arr.slice();
+    this.data = matrizSalida.map((arr, index) => {
+      this.data[index] = arr.slice();
     });
-*/
-    this.makeTable(matrizSalida);
-    // (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
+    // this.makeTable(matrizSalida);
+    (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
   }
 
   filtroVentanaMas() {
@@ -292,11 +291,11 @@ export class MainComponent implements OnInit {
         ventana.splice(0, ventana.length);
       }
     }
-    this.makeTable(matrizSalida);
-    /* this.data = matrizSalida.map(function (arr) {
-       return arr.slice();
-     });
-     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();*/
+    // this.makeTable(matrizSalida);
+    this.data = matrizSalida.map((arr) => {
+      return arr.slice();
+    });
+    (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
 
   }
 
@@ -331,17 +330,20 @@ export class MainComponent implements OnInit {
         ventana.splice(0, ventana.length);
       }
     }
-    this.makeTable(matrizSalida);
-    /*this.data = matrizSalida.map(function (arr) {
+    // this.makeTable(matrizSalida);
+    this.data = matrizSalida.map((arr) => {
       return arr.slice();
     });
     console.log(this.data);
 
-    (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();*/
+    (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
   }
 
   cargarMatrizPrueba1() {
     this.data = this.matrixPrueba1.map((arr) => {
+      return arr.slice();
+    });
+    this.matrizCaracteres = this.matrixPrueba1.map((arr) => {
       return arr.slice();
     });
     this.col = this.matrixPrueba1.length;
