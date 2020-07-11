@@ -101,14 +101,13 @@
     </div>
   </div>
   <br>
-  <!--<div class="row">
-    <div class="col-sm-12" *ngIf="grafico">
-      <div *ngIf="grafico.data">
-        <plotly-plot [data]="grafico?.data" [layout]="grafico.layout"></plotly-plot>
+  <div class="row" [hidden]="!histogramaCreado">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4" *ngIf="grafico">
+      <div *ngIf="grafico.data" class="abs-center">
+        <plotly-plot [data]="grafico.data" [layout]="grafico.layout">
+        </plotly-plot>
       </div>
-
     </div>
-  </div>-->
-
-
+  </div>
 </div>

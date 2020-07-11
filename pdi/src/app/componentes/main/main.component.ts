@@ -16,8 +16,8 @@ export class MainComponent implements OnInit {
   data = [];
   histograma = [];
   grafico = {
-    data: [{x: [1, 2, 3], y: [1, 2, 3], type: 'scatter', mode: 'lines+points', marker: {color: 'red'}}],
-    layout: {width: 320, height: 240, title: 'A Fancy Plot'}
+    data: [],
+    layout: {width: 640, height: 480, title: 'Histograma'}
   };
   numBins = 101;
 
@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
   disabledBotonesFiltrosMasPor = true;
   histogramaCreado = false;
   esNumerico = true;
-  caracteres = [' ', '.', ',', ';', '-', '/', '+', '*', '#', '@', '&'];
+  caracteres = [' ', '.', '"', '/', '+', '=', 'x', '&', '%', '@', '#', '&'];
   matrizCaracteres = [];
   hiden = true;
 
@@ -390,7 +390,6 @@ export class MainComponent implements OnInit {
         ventana.splice(0, ventana.length);
       }
     }
-    // this.makeTable(matrizSalida);
     this.data = matrizSalida.map((arr) => {
       return arr.slice();
     });
@@ -433,26 +432,36 @@ export class MainComponent implements OnInit {
     const h = this.data.length;
     const w = this.data[0].length;
     const hist: number[] = newArray(this.numBins);
+    const ejeX = [];
     let i;
     let x;
     let y;
     let idx;
     let val;
-    // initialize the histogram
+
     for (i = 0; i < this.numBins; ++i) {
       hist[i] = 0;
     }
-    // loop over every single pixel
     for (x = 0; x < h; ++x, idx += 4) {
       for (y = 0, idx = 0; y < w; y++) {
         val = this.data[x][y];
         hist[val]++;
       }
     }
-    // this.grafico.data = [{x: [1, 2, 3], y: [1, 2, 3], type: 'scatter', mode: 'lines+points', marker: {color: 'red'}}];
-    console.log(hist);
+    for (i = 0; i <= 100; i++) {
+      ejeX[i] = i;
+    }
+
     this.histogramaCreado = true;
     this.histograma = hist;
+    this.grafico.data = [];
+    this.grafico.data = [{
+      x: ejeX,
+      y: this.histograma,
+      type: 'bar',
+
+
+    }];
   }
 
   aplicarEcualizacion() {
@@ -475,15 +484,13 @@ export class MainComponent implements OnInit {
         }
       }
     }
-    console.log(histCDF);
-    console.log(cdfmin);
     for (i = 0; i < m; i++) {
       for (j = 0; j < n; j++) {
         this.data[i][j] = this.ecualizacion(histCDF[this.data[i][j]], cdfmin, m, n, this.numBins);
-        console.log(this.ecualizacion(histCDF[this.data[i][j]], cdfmin, m, n, this.numBins));
       }
     }
     this.histogramaCreado = false;
+    this.obternerHistograma();
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
 
   }
