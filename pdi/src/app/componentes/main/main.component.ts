@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {newArray} from '@angular/compiler/src/util';
-import {floor, size, sort} from 'mathjs';
+import {floor, size, sort, round} from 'mathjs';
 
 @Component({
   selector: 'app-main',
@@ -14,12 +14,19 @@ export class MainComponent implements OnInit {
   x;
   y;
   data = [];
+  histograma = [];
+  grafico = {
+    data: [],
+    layout: {width: 640, height: 480, title: 'Histograma'}
+  };
+  numBins = 101;
 
   disabledBotonCrearMatriz = true;
   disabledBotonaplicarFiltro = true;
   disabledBotonesFiltrosMasPor = true;
+  histogramaCreado = false;
   esNumerico = true;
-  caracteres = [' ', '.', ',', ';', '-', '/', '+', '*', '#', '@', '&'];
+  caracteres = [' ', '.', '"', '/', '+', '=', 'x', '&', '%', '@', '#', '&'];
   matrizCaracteres = [];
   hiden = true;
 
@@ -49,6 +56,67 @@ export class MainComponent implements OnInit {
     [0, 0, 80, 80, 80, 80, 80, 80, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ];
+
+  matrizGrande = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 60, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0],
+    [0, 80, 80, 0, 0, 0, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 80, 20, 80, 80, 80, 80, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 80, 80, 20, 80, 80, 80, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 10, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0, 0, 100, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 20, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 70, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ];
+  cubo = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 70, 70, 70, 70, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 70, 70, 70, 70, 50, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 70, 70, 70, 70, 50, 50, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 70, 70, 70, 70, 50, 50, 50, 0, 0, 0, 0, 0, 0],
+    [0, 0, 100, 100, 100, 100, 50, 50, 50, 50, 0, 0, 0, 0, 0, 0],
+    [0, 0, 100, 100, 100, 100, 50, 50, 50, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 100, 100, 100, 100, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 100, 100, 100, 100, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+
+  piramide = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 100, 100, 80, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 100, 100, 100, 80, 80, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 100, 100, 100, 100, 80, 80, 80, 0, 0, 0, 0, 0],
+    [0, 0, 0, 100, 100, 100, 100, 100, 80, 80, 80, 80, 0, 0, 0, 0],
+    [0, 0, 100, 100, 100, 100, 100, 100, 80, 80, 80, 80, 80, 0, 0, 0],
+    [0, 100, 100, 100, 100, 100, 100, 100, 80, 80, 80, 80, 80, 80, 0, 0],
+    [0, 0, 0, 100, 100, 100, 100, 100, 80, 80, 80, 80, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 100, 100, 100, 80, 80, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 100, 100, 80, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
   ];
 
   constructor() {
@@ -104,6 +172,7 @@ export class MainComponent implements OnInit {
         }
       }
       this.hiden = false;
+      this.histogramaCreado = false;
     }
 
     this.mostrarMatrizNumerica();
@@ -217,6 +286,7 @@ export class MainComponent implements OnInit {
         }
       }
     }
+    this.histogramaCreado = false;
 
   }
 
@@ -252,6 +322,7 @@ export class MainComponent implements OnInit {
       return arr.slice();
     });
     // this.makeTable(matrizSalida);
+    this.histogramaCreado = false;
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
   }
 
@@ -286,6 +357,7 @@ export class MainComponent implements OnInit {
     this.data = matrizSalida.map((arr) => {
       return arr.slice();
     });
+    this.histogramaCreado = false;
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
 
   }
@@ -318,11 +390,10 @@ export class MainComponent implements OnInit {
         ventana.splice(0, ventana.length);
       }
     }
-    // this.makeTable(matrizSalida);
     this.data = matrizSalida.map((arr) => {
       return arr.slice();
     });
-
+    this.histogramaCreado = false;
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
   }
 
@@ -337,22 +408,97 @@ export class MainComponent implements OnInit {
     this.row = this.matrixPrueba1[0].length;
     this.hiden = false;
     this.esNumerico = true;
+    this.histogramaCreado = false;
     this.makeTable(this.data);
   }
 
   cargarMatrizPrueba2() {
-    this.data = this.matrixPrueba2.map((arr) => {
+    this.data = this.piramide.map((arr) => {
       return arr.slice();
     });
-    this.matrizCaracteres = this.matrixPrueba2.map((arr) => {
+    this.matrizCaracteres = this.piramide.map((arr) => {
       return arr.slice();
     });
 
-    this.col = this.matrixPrueba1.length;
-    this.row = this.matrixPrueba1[0].length;
+    this.col = this.piramide.length;
+    this.row = this.piramide[0].length;
     this.hiden = false;
     this.esNumerico = true;
+    this.histogramaCreado = false;
     this.makeTable(this.data);
+  }
+
+  obternerHistograma() {
+    const h = this.data.length;
+    const w = this.data[0].length;
+    const hist: number[] = newArray(this.numBins);
+    const ejeX = [];
+    let i;
+    let x;
+    let y;
+    let idx;
+    let val;
+
+    for (i = 0; i < this.numBins; ++i) {
+      hist[i] = 0;
+    }
+    for (x = 0; x < h; ++x, idx += 4) {
+      for (y = 0, idx = 0; y < w; y++) {
+        val = this.data[x][y];
+        hist[val]++;
+      }
+    }
+    for (i = 0; i <= 100; i++) {
+      ejeX[i] = i;
+    }
+
+    this.histogramaCreado = true;
+    this.histograma = hist;
+    this.grafico.data = [];
+    this.grafico.data = [{
+      x: ejeX,
+      y: this.histograma,
+      type: 'bar',
+
+
+    }];
+  }
+
+  aplicarEcualizacion() {
+    let i = 0;
+    let j = 0;
+    const m = this.data.length;
+    const n = this.data[0].length;
+    const histCDF: number[] = newArray(this.histograma.length);
+    histCDF.map((value, index) => {
+      histCDF[index] = 0;
+    });
+    let sum = 0;
+    let cdfmin = 100000;
+    for (i = 0; i < this.numBins; i++) {
+      if (this.histograma[i] > 0) {
+        sum = sum + this.histograma[i];
+        histCDF[i] = sum;
+        if (this.histograma[i] < cdfmin) {
+          cdfmin = this.histograma[i];
+        }
+      }
+    }
+    for (i = 0; i < m; i++) {
+      for (j = 0; j < n; j++) {
+        this.data[i][j] = this.ecualizacion(histCDF[this.data[i][j]], cdfmin, m, n, this.numBins);
+      }
+    }
+    this.histogramaCreado = false;
+    this.obternerHistograma();
+    (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
+
+  }
+
+  ecualizacion(cdf, cdfmin, m, n, niveles) {
+    let res = round((((cdf - cdfmin) / ((m * n) - cdfmin)) * (niveles - 1)));
+    res = res - (res % 10);
+    return res;
   }
 
 }

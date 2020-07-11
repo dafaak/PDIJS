@@ -11,21 +11,33 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <button (click)="crearMatriz()" [disabled]="disabledBotonCrearMatriz" class="btn btn-block btn-outline-success">
         Crear Matriz
       </button>
     </div>
-    <div class="col-sm-4">
-      <button (click)="mostrarMatrizCaracteres()" [hidden]="hiden" d [disabled]="!esNumerico"
+    <div class="col-sm-3">
+      <button (click)="mostrarMatrizCaracteres()" [hidden]="hiden" [disabled]="!esNumerico"
               class="btn btn-block btn-outline-success">
-        Mostrar Matriz Caracteres
+        Matriz Caracteres
       </button>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <button (click)="mostrarMatrizNumerica()" [hidden]="hiden" [disabled]="esNumerico"
               class="btn btn-block btn-outline-success">
-        Mostrar Matriz Numérica
+        Matriz Numérica
+      </button>
+    </div>
+    <div class="col-sm-2">
+      <button (click)="obternerHistograma()" [hidden]="hiden"
+              class="btn btn-block btn-outline-success">
+        Histograma
+      </button>
+    </div>
+    <div class="col-sm-2">
+      <button (click)="aplicarEcualizacion()" [hidden]="hiden" [disabled]="!histogramaCreado"
+              class="btn btn-block btn-outline-success">
+        Ecualización
       </button>
     </div>
   </div>
@@ -89,5 +101,13 @@
     </div>
   </div>
   <br>
-
+  <div class="row" [hidden]="!histogramaCreado">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4" *ngIf="grafico">
+      <div *ngIf="grafico.data" class="abs-center">
+        <plotly-plot [data]="grafico.data" [layout]="grafico.layout">
+        </plotly-plot>
+      </div>
+    </div>
+  </div>
 </div>
