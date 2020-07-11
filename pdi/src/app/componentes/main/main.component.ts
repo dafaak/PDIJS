@@ -58,7 +58,7 @@ export class MainComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
 
-  matrizGrande = [
+  matrixPrueba3 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 60, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0],
@@ -123,6 +123,24 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  cargarDatos(nombre) {
+
+    this.data = nombre.map((arr) => {
+      return arr.slice();
+    });
+    this.matrizCaracteres = nombre.map((arr) => {
+      return arr.slice();
+    });
+
+    this.col = nombre.length;
+    this.row = nombre[0].length;
+    this.hiden = false;
+    this.esNumerico = true;
+    this.histogramaCreado = false;
+    this.makeTable(this.data);
+
   }
 
   capturarDatos(event) {
