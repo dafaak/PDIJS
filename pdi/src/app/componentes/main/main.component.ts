@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {newArray} from '@angular/compiler/src/util';
-import {floor, size, sort} from 'mathjs';
+import {floor, size, sort, round} from 'mathjs';
 
 @Component({
   selector: 'app-main',
@@ -14,10 +14,17 @@ export class MainComponent implements OnInit {
   x;
   y;
   data = [];
+  histograma = [];
+  grafico = {
+    data: [{x: [1, 2, 3], y: [1, 2, 3], type: 'scatter', mode: 'lines+points', marker: {color: 'red'}}],
+    layout: {width: 320, height: 240, title: 'A Fancy Plot'}
+  };
+  numBins = 101;
 
   disabledBotonCrearMatriz = true;
   disabledBotonaplicarFiltro = true;
   disabledBotonesFiltrosMasPor = true;
+  histogramaCreado = false;
   esNumerico = true;
   caracteres = [' ', '.', ',', ';', '-', '/', '+', '*', '#', '@', '&'];
   matrizCaracteres = [];
@@ -62,7 +69,7 @@ export class MainComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 80, 20, 80, 80, 80, 80, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 80, 80, 20, 80, 80, 80, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 10, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0, 0, 100, 0, 0, 0,],
+    [0, 0, 10, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0, 0, 100, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 20, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -72,7 +79,7 @@ export class MainComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 70, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  ]
+  ];
   cubo = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -90,7 +97,7 @@ export class MainComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ]
+  ];
 
   piramide = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -106,11 +113,11 @@ export class MainComponent implements OnInit {
     [0, 100, 100, 100, 100, 100, 100, 100, 80, 80, 80, 80, 80, 80, 0, 0],
     [0, 0, 0, 100, 100, 100, 100, 100, 80, 80, 80, 80, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 100, 100, 100, 80, 80, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 100, 100, 80,0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 100, 100, 80, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
-  ]
+  ];
 
   constructor() {
   }
@@ -165,6 +172,7 @@ export class MainComponent implements OnInit {
         }
       }
       this.hiden = false;
+      this.histogramaCreado = false;
     }
 
     this.mostrarMatrizNumerica();
@@ -278,6 +286,7 @@ export class MainComponent implements OnInit {
         }
       }
     }
+    this.histogramaCreado = false;
 
   }
 
@@ -313,6 +322,7 @@ export class MainComponent implements OnInit {
       return arr.slice();
     });
     // this.makeTable(matrizSalida);
+    this.histogramaCreado = false;
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
   }
 
@@ -347,6 +357,7 @@ export class MainComponent implements OnInit {
     this.data = matrizSalida.map((arr) => {
       return arr.slice();
     });
+    this.histogramaCreado = false;
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
 
   }
@@ -383,7 +394,7 @@ export class MainComponent implements OnInit {
     this.data = matrizSalida.map((arr) => {
       return arr.slice();
     });
-
+    this.histogramaCreado = false;
     (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
   }
 
@@ -398,6 +409,7 @@ export class MainComponent implements OnInit {
     this.row = this.matrixPrueba1[0].length;
     this.hiden = false;
     this.esNumerico = true;
+    this.histogramaCreado = false;
     this.makeTable(this.data);
   }
 
@@ -413,7 +425,73 @@ export class MainComponent implements OnInit {
     this.row = this.piramide[0].length;
     this.hiden = false;
     this.esNumerico = true;
+    this.histogramaCreado = false;
     this.makeTable(this.data);
+  }
+
+  obternerHistograma() {
+    const h = this.data.length;
+    const w = this.data[0].length;
+    const hist: number[] = newArray(this.numBins);
+    let i;
+    let x;
+    let y;
+    let idx;
+    let val;
+    // initialize the histogram
+    for (i = 0; i < this.numBins; ++i) {
+      hist[i] = 0;
+    }
+    // loop over every single pixel
+    for (x = 0; x < h; ++x, idx += 4) {
+      for (y = 0, idx = 0; y < w; y++) {
+        val = this.data[x][y];
+        hist[val]++;
+      }
+    }
+    // this.grafico.data = [{x: [1, 2, 3], y: [1, 2, 3], type: 'scatter', mode: 'lines+points', marker: {color: 'red'}}];
+    console.log(hist);
+    this.histogramaCreado = true;
+    this.histograma = hist;
+  }
+
+  aplicarEcualizacion() {
+    let i = 0;
+    let j = 0;
+    const m = this.data.length;
+    const n = this.data[0].length;
+    const histCDF: number[] = newArray(this.histograma.length);
+    histCDF.map((value, index) => {
+      histCDF[index] = 0;
+    });
+    let sum = 0;
+    let cdfmin = 100000;
+    for (i = 0; i < this.numBins; i++) {
+      if (this.histograma[i] > 0) {
+        sum = sum + this.histograma[i];
+        histCDF[i] = sum;
+        if (this.histograma[i] < cdfmin) {
+          cdfmin = this.histograma[i];
+        }
+      }
+    }
+    console.log(histCDF);
+    console.log(cdfmin);
+    for (i = 0; i < m; i++) {
+      for (j = 0; j < n; j++) {
+        this.data[i][j] = this.ecualizacion(histCDF[this.data[i][j]], cdfmin, m, n, this.numBins);
+        console.log(this.ecualizacion(histCDF[this.data[i][j]], cdfmin, m, n, this.numBins));
+      }
+    }
+    this.histogramaCreado = false;
+    (this.esNumerico) ? this.mostrarMatrizNumerica() : this.mostrarMatrizCaracteres();
+
+  }
+
+  ecualizacion(cdf, cdfmin, m, n, niveles) {
+    let res = round((((cdf - cdfmin) / ((m * n) - cdfmin)) * (niveles - 1)));
+    res = res - (res % 10);
+    return res;
   }
 
 }
