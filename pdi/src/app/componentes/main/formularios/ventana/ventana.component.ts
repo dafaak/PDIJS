@@ -13,8 +13,8 @@ export class VentanaComponent implements OnInit {
 
   constructor() {
     this.formLW = new FormGroup({
-      length: new FormControl('',),
-      width: new FormControl('',),
+      length: new FormControl('', ),
+      width: new FormControl('', ),
     });
     this.escucharFormulario();
   }
@@ -46,12 +46,12 @@ export class VentanaComponent implements OnInit {
 
   validarLargoImpar() {
     if ((this.formLW.value.width % 2) >= 1) {
-      console.log('impar :V')
-      return true
+      console.log('impar :V');
+      return true;
     }
     {
-      console.log('no es impar ctm')
-      return false
+      console.log('no es impar ctm');
+      return false;
     }
   }
 

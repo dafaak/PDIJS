@@ -4,28 +4,53 @@
       <app-crear-row-col (rowAndCol)="capturarDatos($event)"></app-crear-row-col>
     </div>
     <div class="col-sm-3">
-      <button class=" btn btn-block btn-outline-dark" (click)="cargarMatrizPrueba1()"> Cargar matriz 1</button>
     </div>
     <div class="col-sm-3">
-      <button class=" btn btn-block btn-outline-dark" (click)="cargarMatrizPrueba2()"> Cargar matriz 2</button>
+      <br>
+      <div class="dropdown">
+        <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+          Cargar
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <button class="dropdown-item" type="button" (click)="cargarDatos(matrixPrueba1)">Matriz 1</button>
+          <button class="dropdown-item" type="button" (click)="cargarDatos(matrixPrueba2)">Matriz 2</button>
+          <button class="dropdown-item" type="button" (click)="cargarDatos(matrixPrueba3)">Matriz 3</button>
+          <button class="dropdown-item" type="button" (click)="cargarDatos(cubo)">Cubo</button>
+          <button class="dropdown-item" type="button" (click)="cargarDatos(piramide)">Piramide</button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <button (click)="crearMatriz()" [disabled]="disabledBotonCrearMatriz" class="btn btn-block btn-outline-success">
         Crear Matriz
       </button>
     </div>
-    <div class="col-sm-4">
-      <button (click)="mostrarMatrizCaracteres()" [hidden]="hiden" d [disabled]="!esNumerico"
+    <div class="col-sm-3">
+      <button (click)="mostrarMatrizCaracteres()" [hidden]="hiden" [disabled]="!esNumerico"
               class="btn btn-block btn-outline-success">
-        Mostrar Matriz Caracteres
+        Matriz Caracteres
       </button>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <button (click)="mostrarMatrizNumerica()" [hidden]="hiden" [disabled]="esNumerico"
               class="btn btn-block btn-outline-success">
-        Mostrar Matriz Numérica
+        Matriz Numérica
+      </button>
+    </div>
+    <div class="col-sm-2">
+      <button (click)="obternerHistograma()" [hidden]="hiden"
+              class="btn btn-block btn-outline-success">
+        Histograma
+      </button>
+    </div>
+    <div class="col-sm-2">
+      <button (click)="aplicarEcualizacion()" [hidden]="hiden" [disabled]="!histogramaCreado"
+              class="btn btn-block btn-outline-success">
+        Ecualización
       </button>
     </div>
   </div>
@@ -89,5 +114,13 @@
     </div>
   </div>
   <br>
-
+  <div class="row" [hidden]="!histogramaCreado">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4" *ngIf="grafico">
+      <div *ngIf="grafico.data" class="abs-center">
+        <plotly-plot [data]="grafico.data" [layout]="grafico.layout">
+        </plotly-plot>
+      </div>
+    </div>
+  </div>
 </div>
